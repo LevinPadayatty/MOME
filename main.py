@@ -1,9 +1,18 @@
 from tkinter import *
 import tkinter as tk
 from tkinter import font as tkfont
-#from chatterbot import ChatBot
-#from chatterbot.trainers import ListTrainer
-import os
+from chatterbot import ChatBot
+from chatterbot.trainers import ListTrainer
+#import os
+#import pyttsx3
+
+
+"""""
+def my_speak(query):
+    engine = pyttsx3.init()
+    engine.say('{}'.format(query))
+    engine.runAndWait()
+"""""
 
 class main( tk.Tk ):
 
@@ -38,7 +47,6 @@ class main( tk.Tk ):
         # Show a frame for the given page name
         frame = self.frames[page_name]
         frame.tkraise()
-
 
 def configurePersonality():
     Personality.ent1 = Personality.entryName.get()
@@ -128,9 +136,8 @@ class MOME () :
 
 def configureMOME():
 
-
     # creating the chatBot
-    #bot = ChatBot("My Bot")
+    bot = ChatBot("My Bot")
 
     # open txt files for the roboter to learn them
     mOnePos = open('moral1.0.txt', 'r').readlines()
@@ -161,15 +168,13 @@ def configureMOME():
     mNineNeg = open( 'moral9.1.txt', 'r' ).readlines()
 
     # now training the bot with the help of trainer
-    #trainer = ListTrainer(bot)
+    trainer = ListTrainer(bot)
 
     # empty the memories of the robot
-    #bot.storage.drop()
+    bot.storage.drop()
 
     # configure moralities
 
-
-    """""
     # moralOne
     if   MOME.s1.get() == 0:
         trainer.train( mOnePos )
@@ -223,8 +228,6 @@ def configureMOME():
         trainer.train( mNinePos )
     else:
         trainer.train( mNineNeg )
-        
-    """""
 
 class PageOne( tk.Frame ):
 
@@ -309,23 +312,29 @@ class PageTwo( tk.Frame ):
                             command=lambda: controller.show_frame( "StartPage" ) )
         button.pack()
 
-        """""
         # creating the chatBot
         bot = ChatBot("My Bot")
+
+        print( str( Personality.entryGender.get() ) )
 
         def ask_from_bot():
             query = textF.get()
             #os.system("espeak -ven+m3 -k5 -s150 "+ "'"+ query+"'")
             answer_from_bot = bot.get_response( query )
+            #my_speak(query)
             msgs.insert( END, Personality.ent1+ ": "+ query)
             print( type( answer_from_bot ) )
             #os.system( "espeak -ven+f3 -k5 -s150 " + "'" + str(answer_from_bot) + "'" )
-            msgs.insert( END, "Optimus : " + str( answer_from_bot ) )
-            textF.delete( 0, END )
-            
-        """""
+            if(Personality.entryGender.get() == 'male' and MOME.s2.get() == 1):
+                msgs.insert( END, "Optimus : Mr. "+ Personality.entryName.get()+ ", " +str(answer_from_bot))
+            if(Personality.entryGender.get() == 'female' and MOME.s2.get() == 1):
+                msgs.insert( END, "Optimus : Ms." + Personality.entryName.get() + ", "+str(answer_from_bot))
+            if(MOME.s2.get() == 0):
+                msgs.insert( END, "Optimus : " + Personality.entryName.get() + ", " +str(answer_from_bot))
 
-        frame = Frame( self )
+            textF.delete(0, END)
+
+        frame = Frame(self)
 
         sc = Scrollbar( frame )
         msgs = Listbox( frame, width=80, height=20 )
@@ -340,8 +349,8 @@ class PageTwo( tk.Frame ):
 
         textF = Entry( self, font=("Verdana", 20) )
         textF.pack( fill=X, pady=10 )
-        #btn = Button( self, text="Ask from bot", font=("Verdana", 20), command = ask_from_bot )
-        #btn.pack()
+        btn = Button( self, text="Ask from bot", font=("Verdana", 20), command = ask_from_bot )
+        btn.pack()
 
 if __name__ == "__main__":
     app = main()
