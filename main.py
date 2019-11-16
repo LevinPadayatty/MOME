@@ -3,16 +3,8 @@ import tkinter as tk
 from tkinter import font as tkfont
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
-#import os
 #import pyttsx3
 
-
-"""""
-def my_speak(query):
-    engine = pyttsx3.init()
-    engine.say('{}'.format(query))
-    engine.runAndWait()
-"""""
 
 class main( tk.Tk ):
 
@@ -146,26 +138,26 @@ def configureMOME():
     mTwoPos = open('moral2.0.txt', 'r').readlines()
     mTwoNeg = open('moral2.1.txt', 'r').readlines()
 
-    mThreePos = open( 'moral3.0.txt', 'r' ).readlines()
-    mThreeNeg = open( 'moral3.1.txt', 'r' ).readlines()
+    mThreePos = open('moral3.0.txt', 'r').readlines()
+    mThreeNeg = open('moral3.1.txt', 'r').readlines()
 
-    mFourPos = open( 'moral4.0.txt', 'r' ).readlines()
-    mFourNeg = open( 'moral4.1.txt', 'r' ).readlines()
+    mFourPos = open('moral4.0.txt', 'r').readlines()
+    mFourNeg = open('moral4.1.txt', 'r').readlines()
 
-    mFivePos = open( 'moral5.0.txt', 'r' ).readlines()
-    mFiveNeg = open( 'moral5.1.txt', 'r' ).readlines()
+    mFivePos = open('moral5.0.txt', 'r').readlines()
+    mFiveNeg = open('moral5.1.txt', 'r').readlines()
 
-    mSixPos = open( 'moral6.0.txt', 'r' ).readlines()
-    mSixNeg = open( 'moral6.1.txt', 'r' ).readlines()
+    mSixPos = open('moral6.0.txt', 'r').readlines()
+    mSixNeg = open('moral6.1.txt', 'r').readlines()
 
-    mSevenPos = open( 'moral7.0.txt', 'r' ).readlines()
-    mSevenNeg = open( 'moral7.1.txt', 'r' ).readlines()
+    mSevenPos = open('moral7.0.txt', 'r' ).readlines()
+    mSevenNeg = open('moral7.1.txt', 'r' ).readlines()
 
-    mEightPos = open( 'moral8.0.txt', 'r' ).readlines()
-    mEightNeg = open( 'moral8.1.txt', 'r' ).readlines()
+    mEightPos = open('moral8.0.txt', 'r' ).readlines()
+    mEightNeg = open('moral8.1.txt', 'r' ).readlines()
 
-    mNinePos = open( 'moral9.0.txt', 'r' ).readlines()
-    mNineNeg = open( 'moral9.1.txt', 'r' ).readlines()
+    mNinePos = open('moral9.0.txt', 'r').readlines()
+    mNineNeg = open('moral9.1.txt', 'r').readlines()
 
     # now training the bot with the help of trainer
     trainer = ListTrainer(bot)
@@ -176,183 +168,195 @@ def configureMOME():
     # configure moralities
 
     # moralOne
-    if   MOME.s1.get() == 0:
-        trainer.train( mOnePos )
+    if MOME.s1.get() == 0:
+        trainer.train(mOnePos)
     else:
-        trainer.train( mOneNeg )
+        trainer.train(mOneNeg)
 
     # moralTwo
-    if  MOME.s2.get() == 0:
-        trainer.train( mTwoPos )
+    if MOME.s2.get() == 0:
+        trainer.train(mTwoPos)
     else:
-        trainer.train( mTwoNeg )
+        trainer.train(mTwoNeg)
 
     # moralThree
     if MOME.s3.get() == 0:
-        trainer.train( mThreePos )
+        trainer.train(mThreePos)
     else:
-        trainer.train( mThreeNeg )
+        trainer.train(mThreeNeg)
 
      # moralFour
     if MOME.s4.get() == 0:
-        trainer.train( mFourPos )
+        trainer.train(mFourPos)
     else:
-        trainer.train( mFourNeg )
+        trainer.train(mFourNeg)
 
     # moralFive
     if MOME.s5.get() == 0:
-        trainer.train( mFivePos )
+        trainer.train(mFivePos)
     else:
-        trainer.train( mFiveNeg )
+        trainer.train(mFiveNeg)
 
     # moralSix
     if MOME.s6.get() == 0:
-        trainer.train( mSixPos )
+        trainer.train(mSixPos)
     else:
-        trainer.train( mSixNeg )
+        trainer.train(mSixNeg)
 
     # moralSeven
     if MOME.s7.get() == 0:
-        trainer.train( mSevenPos )
+        trainer.train(mSevenPos)
     else:
-        trainer.train( mSevenNeg )
+        trainer.train(mSevenNeg)
 
     # moralEight
     if MOME.s8.get() == 0:
-        trainer.train( mEightPos )
+        trainer.train(mEightPos)
     else:
-        trainer.train( mEightNeg )
+        trainer.train(mEightNeg)
 
     # moralNine
     if MOME.s9.get() == 0:
-        trainer.train( mNinePos )
+        trainer.train(mNinePos)
     else:
-        trainer.train( mNineNeg )
+        trainer.train(mNineNeg)
 
-class PageOne( tk.Frame ):
+class PageOne(tk.Frame):
 
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__( self, parent )
+        tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        label = tk.Label( self, text="MOME Settings", font='calibri 20 bold ' )
-        label.grid( row=0, column=0 )
-        buttonOne = tk.Button( self, text="Go to personality",
-                            command=lambda: controller.show_frame( "StartPage" ) )
-        buttonOne.grid( row=11, column=0, sticky='w' )
+        label = tk.Label(self, text="MOME Settings", font='calibri 20 bold ')
+        label.grid(row=0, column=0)
+        buttonOne = tk.Button(self, text="Go to personality",
+                            command=lambda: controller.show_frame( "StartPage"))
+        buttonOne.grid(row=11, column=0, sticky='w')
 
-        buttonTwo = tk.Button( self, text="configure morality menu",
+        buttonTwo = tk.Button(self, text="configure morality menu",
                          command = configureMOME)
-        buttonTwo.grid( row=11, column=1, sticky='w' )
+        buttonTwo.grid(row=11, column=1, sticky='w')
 
-        title1 = tk.Label( self, text="Rules of conduct", font='calibri 16 bold' )
-        title1.grid( row=1, column=0, sticky='w' )
+        title1 = tk.Label(self, text="Rules of conduct", font='calibri 16 bold')
+        title1.grid(row=1, column=0, sticky='w')
 
-        plusMinusLabel = Label( self, text=("+ / -") )
-        plusMinusLabel.grid( row=1, column=1, sticky='w' )
+        plusMinusLabel = Label(self, text=("+ / -"))
+        plusMinusLabel.grid(row=1, column=1, sticky='w')
 
-        l1 = Label( self, text=("1. I keep mentioning that I'm a machine.") )
-        l1.grid( row=2, column=0, sticky='w' )
+        l1 = Label(self, text=("1. I keep mentioning that I'm a machine."))
+        l1.grid(row=2, column=0, sticky='w')
 
-        MOME.s1 = Scale( self, from_=0, to=1, orient=HORIZONTAL, length=50)
-        MOME.s1.grid( row=2, column=1, sticky='w' )
+        MOME.s1 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
+        MOME.s1.grid(row=2, column=1, sticky='w')
 
-        l2 = Label( self, text=("2. I'm screening my communications partner.") )
-        l2.grid( row=3, column=0, sticky='w' )
+        l2 = Label(self, text=(" 2. Informal/formal communication"))
+        l2.grid(row=3, column=0, sticky='w')
 
-        MOME.s2 = Scale( self, from_=0, to=1, orient=HORIZONTAL, length=50)
-        MOME.s2.grid( row=3, column=1, sticky='w' )
+        MOME.s2 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
+        MOME.s2.grid(row=3, column=1, sticky='w')
 
-        l3 = Label( self, text=("3. I respond positively to insults."))
-        l3.grid( row=4, column=0, sticky='w' )
-        MOME.s3 = Scale( self, from_=0, to=1, orient=HORIZONTAL, length=50)
-        MOME.s3.grid( row=4, column=1, sticky='w' )
+        l3 = Label(self, text=("3. I respond positively to insults."))
+        l3.grid(row=4, column=0, sticky='w')
+        MOME.s3 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
+        MOME.s3.grid(row=4, column=1, sticky='w')
 
-        l4 = Label( self, text=("4. I react to my counterpart with prejudice.") )
-        l4.grid( row=5, column=0, sticky='w' )
-        MOME.s4 = Scale( self, from_=0, to=1, orient=HORIZONTAL, length=50 )
-        MOME.s4.grid( row=5, column=1, sticky='w' )
+        l4 = Label(self, text=("4. I react to my counterpart with prejudice."))
+        l4.grid(row=5, column=0, sticky='w')
+        MOME.s4 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50 )
+        MOME.s4.grid(row=5, column=1, sticky='w')
 
         l5 = Label( self, text=("5. I compliment my counterpart.") )
-        l5.grid( row=6, column=0, sticky='w' )
-        MOME.s5 = Scale( self, from_=0, to=1, orient=HORIZONTAL, length=50 )
-        MOME.s5.grid( row=6, column=1, sticky='w' )
+        l5.grid(row=6, column=0, sticky='w')
+        MOME.s5 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
+        MOME.s5.grid(row=6, column=1, sticky='w')
 
-        l6 = Label( self, text=("6. I keep my distance from the other person.") )
-        l6.grid( row=7, column=0, sticky='w' )
-        MOME.s6 = Scale( self, from_=0, to=1, orient=HORIZONTAL, length=50 )
-        MOME.s6.grid( row=7, column=1, sticky='w' )
+        l6 = Label(self, text=("6. I keep my distance from the other person."))
+        l6.grid(row=7, column=0, sticky='w')
+        MOME.s6 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
+        MOME.s6.grid(row=7, column=1, sticky='w')
 
         l7 = Label( self, text=("7. I'll beat my counterpart.") )
         l7.grid( row=8, column=0, sticky='w' )
-        MOME.s7 = Scale( self, from_=0, to=1, orient=HORIZONTAL, length=50 )
+        MOME.s7 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
         MOME.s7.grid( row=8, column=1, sticky='w' )
 
         l8 = Label( self, text=("8. I'm threatening my counterpart.") )
         l8.grid( row=9, column=0, sticky='w' )
-        MOME.s8 = Scale( self, from_=0, to=1, orient=HORIZONTAL, length=50 )
-        MOME.s8.grid( row=9, column=1, sticky='w' )
+        MOME.s8 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
+        MOME.s8.grid(row=9, column=1, sticky='w')
 
-        l9 = Label( self, text=("9. I practice my own morals.") )
-        l9.grid( row=10, column=0, sticky='w' )
-        MOME.s9 = Scale( self, from_=0, to=1, orient=HORIZONTAL, length=50 )
-        MOME.s9.grid( row=10, column=1, sticky='w' )
+        l9 = Label( self, text=("9. I practice my own morals."))
+        l9.grid(row=10, column=0, sticky='w')
+        MOME.s9 = Scale( self, from_=0, to=1, orient=HORIZONTAL, length=50)
+        MOME.s9.grid(row=10, column=1, sticky='w')
 
 
-class PageTwo( tk.Frame ):
+class PageTwo(tk.Frame):
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__( self, parent )
+        tk.Frame.__init__(self, parent)
         self.controller = controller
 
-        label = tk.Label( self, text="chatBot PiMecha", font='calibri 20 bold' )
-        label.pack( side="top", fill="x", pady=10, )
-        button = tk.Button( self, text="Go to personality",
-                            command=lambda: controller.show_frame( "StartPage" ) )
+        label = tk.Label(self, text="chatBot PiMecha", font='calibri 20 bold')
+        label.pack(side="top", fill="x", pady=10)
+        button = tk.Button(self, text="Go to personality",
+                            command=lambda: controller.show_frame("StartPage"))
         button.pack()
 
         # creating the chatBot
         bot = ChatBot("My Bot")
 
-        print( str( Personality.entryGender.get() ) )
+        print(str(Personality.entryGender.get()))
 
         def ask_from_bot():
             query = textF.get()
-            #os.system("espeak -ven+m3 -k5 -s150 "+ "'"+ query+"'")
-            answer_from_bot = bot.get_response( query )
-            #my_speak(query)
-            msgs.insert( END, Personality.ent1+ ": "+ query)
-            print( type( answer_from_bot ) )
-            #os.system( "espeak -ven+f3 -k5 -s150 " + "'" + str(answer_from_bot) + "'" )
+            answer_from_bot = bot.get_response(query)
+            msgs.insert(END, Personality.ent1+ ": "+ query)
+            print(type(answer_from_bot))
             if(Personality.entryGender.get() == 'male' and MOME.s2.get() == 1):
-                msgs.insert( END, "Optimus : Mr. "+ Personality.entryName.get()+ ", " +str(answer_from_bot))
+                msgs.insert(END, "Optimus : Mr. "+ Personality.entryName.get()+ ", " +str(answer_from_bot))
+
+                """""
+                engine = pyttsx3.init()
+                rate = engine.getProperty('rate')
+                print(rate)
+                engine.setProperty('rate', 125)
+                volume = engine.getProperty( 'volume' )
+                print( volume )
+                engine.setProperty( 'volume', 1.0 )
+                voices = engine.getProperty( 'voices' )
+                engine.setProperty( 'voice', voices[0].id )
+                engine.say(answer_from_bot)
+                engine.runAndWait()
+                engine.stop()
+                """""
+
             if(Personality.entryGender.get() == 'female' and MOME.s2.get() == 1):
-                msgs.insert( END, "Optimus : Ms." + Personality.entryName.get() + ", "+str(answer_from_bot))
+                msgs.insert(END, "Optimus : Ms." + Personality.entryName.get() + ", "+str(answer_from_bot))
             if(MOME.s2.get() == 0):
-                msgs.insert( END, "Optimus : " + Personality.entryName.get() + ", " +str(answer_from_bot))
+                msgs.insert(END, "Optimus : " + Personality.entryName.get() + ", " +str(answer_from_bot))
 
             textF.delete(0, END)
 
         frame = Frame(self)
 
-        sc = Scrollbar( frame )
-        msgs = Listbox( frame, width=80, height=20 )
+        sc = Scrollbar(frame)
+        msgs = Listbox(frame, width=80, height=20)
 
-        sc.pack( side=RIGHT, fill=Y )
-
-        msgs.pack( side=LEFT, fill=BOTH, pady=10 )
+        sc.pack(side=RIGHT, fill=Y)
+        msgs.pack(side=LEFT, fill=BOTH, pady=10)
 
         frame.pack()
 
         # creating text field
 
-        textF = Entry( self, font=("Verdana", 20) )
-        textF.pack( fill=X, pady=10 )
-        btn = Button( self, text="Ask from bot", font=("Verdana", 20), command = ask_from_bot )
+        textF = Entry( self, font=("Verdana", 20))
+        textF.pack(fill=X, pady=10 )
+        btn = Button(self, text="Ask from bot", font=("Verdana", 20), command=ask_from_bot)
         btn.pack()
 
-if __name__ == "__main__":
+if __name__=="__main__":
     app = main()
-    app.title( "MOME" )
+    app.title("MOME")
     app.mainloop()
