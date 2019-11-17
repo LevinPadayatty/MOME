@@ -15,14 +15,14 @@ import shutil
 import subprocess
 import time
 import re
-#import picamera
+import picamera
 import tempfile
 from tkinter import font
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import simpledialog
 from tkinter import filedialog
-#from serial.tools import list_ports
+from serial.tools import list_ports
 
 
 ##########################  MainApp  ###########################################
@@ -938,7 +938,7 @@ robot = None
 logo = None
 img = None
 MAX_VALUE = 1023
-path = '../PiMecha'
+path = '/home/pi/PiMecha'
 
 if os.path.exists(path + '/.Temp'):
     shutil.rmtree(path + '/.Temp')
