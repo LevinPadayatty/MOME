@@ -16,7 +16,7 @@ import webbrowser
 from tkinter import font
 import tkinter as tk
 from tkinter import messagebox
-#from serial.tools import list_ports
+from serial.tools import list_ports
 
 ##########################  MainApp  ###########################################
 class MainApp(pimecha.PiMecha, tk.Tk):
@@ -71,12 +71,11 @@ class MainApp(pimecha.PiMecha, tk.Tk):
             frame.config(bg="white")
             frame.grid(row=0,column=0, sticky="nsew")
 
-        """""
         ports = list(list_ports.comports())
         for p in ports:
             if "USB2.0-Serial" in p:
                 self.port = ((p.device).split("/"))[2]
-        """""
+                
         self.leftframe_contents()
         self.show_frame("OperateFrame")
 
