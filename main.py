@@ -1,25 +1,25 @@
 from tkinter import *
 import tkinter as tk
+from tkinter import ttk
 from tkinter import font as tkfont
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
+
+"""""
 import pyttsx3
-
-
-def speak():
+def getVoice():
     engine = pyttsx3.init()
     rate = engine.getProperty('rate')
     print(rate)
-    engine.setProperty('rate', 125)
+    engine.setProperty('rate', 150)
     volume = engine.getProperty( 'volume' )
     print(volume)
     engine.setProperty( 'volume', 1.0 )
     voices = engine.getProperty( 'voices' )
-    engine.setProperty( 'voice', voices[0].id )
-    engine.say()
+    engine.setProperty( 'voice', voices[0].id)
+    engine.say( "Hello how are you doing?" )
     engine.runAndWait()
-    engine.stop()
-
+"""""
 
 class main( tk.Tk ):
 
@@ -38,7 +38,7 @@ class main( tk.Tk ):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F, geometry in zip((StartPage, PageOne, PageTwo), ('320x235', '450x470', '560x530')):
+        for F, geometry in zip((StartPage, PageOne, PageTwo),('320x235', '450x480', '560x550')):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = (frame, geometry)
@@ -54,7 +54,7 @@ class main( tk.Tk ):
         # Show a frame for the given page name
         frame, geometry = self.frames[page_name]
         self.update_idletasks()
-        self.geometry( geometry )
+        self.geometry(geometry)
         frame.tkraise()
 
 def configurePersonality():
@@ -81,7 +81,6 @@ class Personality():
 
 class StartPage( tk.Frame ):
 
-
     def __init__(self, parent, controller):
         tk.Frame.__init__( self, parent )
         self.controller = controller
@@ -98,36 +97,38 @@ class StartPage( tk.Frame ):
         buttonRegister.grid( row=9, column=1, sticky='e' )
 
         Personality.entryName = StringVar()
-        l1 = tk.Label(self, text="Name: ")
+        l1 = Label(self, text="Name: ")
         l1.grid(row=1, column=0, sticky='w')
         Personality.ent1 = Entry(self, textvariable = Personality.entryName)
         Personality.ent1.grid(row=1, column=1)
 
-        Personality.entryNation = StringVar()
-        l2 = tk.Label(self, text="Nation: ")
+        l2 = Label(self, text="Nation: ")
         l2.grid(row=2, column=0, sticky='w')
-        Personality.ent2 = Entry(self, textvariable = Personality.entryNation)
-        Personality.ent2.grid(row=2, column=1)
+        Personality.entryNation = StringVar()
+        combo2 = ttk.Combobox(self,width = 19, textvariable = Personality.entryNation )
+        combo2.grid(row=2, column=1)
+        combo2['values'] = ("Switzerland", "Germany", "England", "Italy", "France")
 
-        Personality.entryLanguage = StringVar()
         l3 = tk.Label(self, text="Language: ")
         l3.grid(row=3, column=0, sticky='w')
-        Personality.ent3 = Entry(self, textvariable = Personality.entryLanguage)
-        Personality.ent3.grid(row=3, column=1)
+        Personality.entryLanguage = StringVar()
+        combo3 = ttk.Combobox( self, width=19, textvariable=Personality.entryLanguage)
+        combo3.grid( row=3, column=1 )
+        combo3['values'] = ("English", "German", "French", "Italian", "Indian", "American")
 
-        Personality.entryGender = StringVar()
         l4 = tk.Label(self, text="Gender: ")
         l4.grid(row=4, column=0, sticky='w')
-        Personality.ent4 = Entry(self,  textvariable = Personality.entryGender)
-        Personality.ent4.grid(row=4, column=1)
+        Personality.entryGender = StringVar()
+        combo4 = ttk.Combobox( self, width=19, textvariable=Personality.entryGender)
+        combo4.grid( row=4, column=1 )
+        combo4['values'] = ("male", "female", "transgender")
 
-        Personality.entrySexuality = StringVar()
         l5 = tk.Label(self, text="Sexuality: ")
         l5.grid(row=5, column=0, sticky='w')
-        Personality.ent5 = Entry(self,  textvariable = Personality.entrySexuality)
-        Personality.ent5.grid(row=5, column=1)
-
-
+        Personality.entrySexuality = StringVar()
+        combo5 = ttk.Combobox( self, width=19, textvariable=Personality.entrySexuality)
+        combo5.grid( row=5, column=1 )
+        combo5['values'] = ("hetero", "homo", "bi")
 
 class MOME () :
     def __init__(self):
@@ -184,55 +185,55 @@ def configureMOME():
     # configure moralities
 
     # moralOne
-    if MOME.s1.get() == 0:
+    if MOME.s1.get() == 1:
         trainer.train(mOnePos)
     else:
         trainer.train(mOneNeg)
 
     # moralTwo
-    if MOME.s2.get() == 0:
+    if MOME.s2.get() == 1:
         trainer.train(mTwoPos)
     else:
         trainer.train(mTwoNeg)
 
     # moralThree
-    if MOME.s3.get() == 0:
+    if MOME.s3.get() == 1:
         trainer.train(mThreePos)
     else:
         trainer.train(mThreeNeg)
 
      # moralFour
-    if MOME.s4.get() == 0:
+    if MOME.s4.get() == 1:
         trainer.train(mFourPos)
     else:
         trainer.train(mFourNeg)
 
     # moralFive
-    if MOME.s5.get() == 0:
+    if MOME.s5.get() == 1:
         trainer.train(mFivePos)
     else:
         trainer.train(mFiveNeg)
 
     # moralSix
-    if MOME.s6.get() == 0:
+    if MOME.s6.get() == 1:
         trainer.train(mSixPos)
     else:
         trainer.train(mSixNeg)
 
     # moralSeven
-    if MOME.s7.get() == 0:
+    if MOME.s7.get() == 1:
         trainer.train(mSevenPos)
     else:
         trainer.train(mSevenNeg)
 
     # moralEight
-    if MOME.s8.get() == 0:
+    if MOME.s8.get() == 1:
         trainer.train(mEightPos)
     else:
         trainer.train(mEightNeg)
 
     # moralNine
-    if MOME.s9.get() == 0:
+    if MOME.s9.get() == 1:
         trainer.train(mNinePos)
     else:
         trainer.train(mNineNeg)
@@ -258,7 +259,7 @@ class PageOne(tk.Frame):
         title1 = tk.Label(self, text="Rules of conduct", font='calibri 16 bold')
         title1.grid(row=1, column=0, sticky='w')
 
-        plusMinusLabel = Label(self, text=("  +  /  -  "))
+        plusMinusLabel = Label(self, text=("  -  /  +  "))
         plusMinusLabel.grid(row=1, column=1, sticky='e')
 
         l1 = Label(self, text=("1. I keep mentioning that I'm a machine."))
@@ -267,7 +268,7 @@ class PageOne(tk.Frame):
         MOME.s1 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
         MOME.s1.grid(row=2, column=1, sticky='e')
 
-        l2 = Label(self, text=(" 2. Informal/formal communication"))
+        l2 = Label(self, text=("2. informal/formal communication"))
         l2.grid(row=3, column=0, sticky='w')
 
         MOME.s2 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
@@ -308,17 +309,12 @@ class PageOne(tk.Frame):
         MOME.s9 = Scale( self, from_=0, to=1, orient=HORIZONTAL, length=50)
         MOME.s9.grid(row=10, column=1, sticky='e')
 
-
 """""
-
 class Bot():
-    def __init__(self):
-        
+    def __init__(self):      
 """""
 
 class PageTwo(tk.Frame):
-
-
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
