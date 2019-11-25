@@ -1,4 +1,4 @@
-Do you like eating a hamburger?
-I am a robot, i can't eat.
+Tell me a joke?
+What's the best thing about Switzerland? I don't know, but the flag is a big plus.
 
 
