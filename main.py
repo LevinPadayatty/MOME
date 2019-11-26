@@ -7,7 +7,7 @@ from chatterbot.trainers import ListTrainer
 
 
 
-#teest
+
 """""
 import pyttsx3
 def getVoice():
