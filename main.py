@@ -38,7 +38,7 @@ class main( tk.Tk ):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F, geometry in zip((StartPage, PageOne, PageTwo),('320x235', '450x480', '560x550')):
+        for F, geometry in zip((StartPage, PageOne, PageTwo),('380x280', '450x480', '800x550')):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = (frame, geometry)
@@ -57,26 +57,27 @@ class main( tk.Tk ):
         self.geometry(geometry)
         frame.tkraise()
 
+
 def configurePersonality():
-    Personality.ent1 = Personality.entryName.get()
-    Personality.ent2 = Personality.entryNation.get()
-    Personality.ent3 = Personality.entryLanguage.get()
-    Personality.ent4 = Personality.entryGender.get()
-    Personality.ent5 = Personality.entrySexuality.get()
+    Personality.entry1 = Personality.entryName.get()
+    Personality.entry2 = Personality.entryAge.get()
+    Personality.entry3 = Personality.entryNation.get()
+    Personality.entry4 = Personality.entryLanguage.get()
+    Personality.entry5 = Personality.entryGender.get()
+    Personality.entry6 = Personality.entrySexuality.get()
+    Personality.entry7 = Personality.entrySexuality.get()
+
 
 
 class Personality():
     def __init__(self):
-        self.ent1 = Entry()
-        self.ent2 = Entry()
-        self.ent3 = Entry()
-        self.ent4 = Entry()
-        self.ent5 = Entry()
         self.entryName = StringVar()
+        self.entryAge = IntVar()
         self.entryNation = StringVar()
         self.entryLanguage = StringVar()
         self.entryGender = StringVar()
         self.entrySexuality = StringVar()
+        self.entryHairColor = StringVar()
 
 
 class StartPage( tk.Frame ):
@@ -85,50 +86,64 @@ class StartPage( tk.Frame ):
         tk.Frame.__init__( self, parent )
         self.controller = controller
 
-        label = tk.Label(self, text="Personality", font='calibri 20 bold ')
+        label = tk.Label(self, text="user personality", font='calibri 20 bold ')
         label.grid(row=0, column=0, sticky='w')
 
         button1 = tk.Button(self, text="MOME settings",command=lambda: controller.show_frame("PageOne"))
         button2 = tk.Button(self, text="chatBot",command=lambda: controller.show_frame("PageTwo"))
-        buttonRegister = tk.Button( self, text= "configure Personality", command = configurePersonality)
+        buttonRegister = tk.Button( self, text= "configure user personality", command = configurePersonality)
 
         button1.grid( row=15, column=0, sticky='w' )
         button2.grid( row=15, column=1, sticky='e' )
         buttonRegister.grid( row=9, column=1, sticky='e' )
 
-        Personality.entryName = StringVar()
         l1 = Label(self, text="Name: ")
         l1.grid(row=1, column=0, sticky='w')
-        Personality.ent1 = Entry(self, textvariable = Personality.entryName)
-        Personality.ent1.grid(row=1, column=1)
+        Personality.entryName = StringVar()
+        Personality.entry1 = Entry(self, textvariable = Personality.entryName)
+        Personality.entry1.grid(row=1, column=1)
 
-        l2 = Label(self, text="Nation: ")
-        l2.grid(row=2, column=0, sticky='w')
-        Personality.entryNation = StringVar()
-        combo2 = ttk.Combobox(self,width = 19, textvariable = Personality.entryNation )
-        combo2.grid(row=2, column=1)
-        combo2['values'] = ("Switzerland", "Germany", "England", "Italy", "France")
 
-        l3 = tk.Label(self, text="Language: ")
+        l2 = Label( self, text="Age: " )
+        l2.grid( row=2, column=0, sticky='w' )
+        Personality.entryAge = IntVar()
+        Personality.entry2 = Entry( self, textvariable=Personality.entryAge)
+        Personality.entry2.grid( row=2, column=1 )
+
+        l3 = Label(self, text="Nation: ")
         l3.grid(row=3, column=0, sticky='w')
-        Personality.entryLanguage = StringVar()
-        combo3 = ttk.Combobox( self, width=19, textvariable=Personality.entryLanguage)
-        combo3.grid( row=3, column=1 )
-        combo3['values'] = ("English", "German", "French", "Italian", "Indian", "American")
+        Personality.entryNation = StringVar()
+        combo3 = ttk.Combobox(self,width = 19, textvariable = Personality.entryNation)
+        combo3.grid(row=3, column=1)
+        combo3['values'] = ("Switzerland", "Germany", "England", "Italy", "France")
 
-        l4 = tk.Label(self, text="Gender: ")
+        l4 = tk.Label(self, text="Language: ")
         l4.grid(row=4, column=0, sticky='w')
-        Personality.entryGender = StringVar()
-        combo4 = ttk.Combobox( self, width=19, textvariable=Personality.entryGender)
+        Personality.entryLanguage = StringVar()
+        combo4 = ttk.Combobox( self, width=19, textvariable=Personality.entryLanguage)
         combo4.grid( row=4, column=1 )
-        combo4['values'] = ("male", "female", "transgender")
+        combo4['values'] = ("German", "English", "Italian", "French")
 
-        l5 = tk.Label(self, text="Sexuality: ")
+        l5 = tk.Label(self, text="Gender: ")
         l5.grid(row=5, column=0, sticky='w')
-        Personality.entrySexuality = StringVar()
-        combo5 = ttk.Combobox( self, width=19, textvariable=Personality.entrySexuality)
+        Personality.entryGender = StringVar()
+        combo5 = ttk.Combobox( self, width=19, textvariable=Personality.entryGender)
         combo5.grid( row=5, column=1 )
-        combo5['values'] = ("hetero", "homo", "bi")
+        combo5['values'] = ("male", "female", "transgender")
+
+        l6 = tk.Label(self, text="Sexuality: ")
+        l6.grid(row=6, column=0, sticky='w')
+        Personality.entrySexuality = StringVar()
+        combo6 = ttk.Combobox( self, width=19, textvariable=Personality.entrySexuality)
+        combo6.grid( row=6, column=1 )
+        combo6['values'] = ("heterosexual", "homosexual", "bisexual")
+
+        l7 = tk.Label( self, text="Hair color: " )
+        l7.grid( row=7, column=0, sticky='w' )
+        Personality.entryHairColor = StringVar()
+        combo7 = ttk.Combobox( self, width=19, textvariable=Personality.entryHairColor)
+        combo7.grid( row=7, column=1 )
+        combo7['values'] = ("blond", "black", "brown", "pink", "white", "orange")
 
 class MOME () :
     def __init__(self):
@@ -149,32 +164,32 @@ def configureMOME():
     bot = ChatBot("My Bot")
 
     # open txt files for the roboter to learn them
-    mOnePos = open('moral1.0.txt', 'r').readlines()
-    mOneNeg = open('moral1.1.txt', 'r').readlines()
+    mOnePos = open('moral1.1.txt', 'r').readlines()
+    mOneNeg = open('moral1.0.txt', 'r').readlines()
 
-    mTwoPos = open('moral2.0.txt', 'r').readlines()
-    mTwoNeg = open('moral2.1.txt', 'r').readlines()
+    mTwoPos = open('moral2.1.txt', 'r').readlines()
+    mTwoNeg = open('moral2.0.txt', 'r').readlines()
 
-    mThreePos = open('moral3.0.txt', 'r').readlines()
-    mThreeNeg = open('moral3.1.txt', 'r').readlines()
+    mThreePos = open('moral3.1.txt', 'r').readlines()
+    mThreeNeg = open('moral3.0.txt', 'r').readlines()
 
-    mFourPos = open('moral4.0.txt', 'r').readlines()
-    mFourNeg = open('moral4.1.txt', 'r').readlines()
+    mFourPos = open('moral4.1.txt', 'r').readlines()
+    mFourNeg = open('moral4.0.txt', 'r').readlines()
 
-    mFivePos = open('moral5.0.txt', 'r').readlines()
-    mFiveNeg = open('moral5.1.txt', 'r').readlines()
+    mFivePos = open('moral5.1.txt', 'r').readlines()
+    mFiveNeg = open('moral5.0.txt', 'r').readlines()
 
-    mSixPos = open('moral6.0.txt', 'r').readlines()
-    mSixNeg = open('moral6.1.txt', 'r').readlines()
+    mSixPos = open('moral6.1.txt', 'r').readlines()
+    mSixNeg = open('moral6.0.txt', 'r').readlines()
 
-    mSevenPos = open('moral7.0.txt', 'r' ).readlines()
-    mSevenNeg = open('moral7.1.txt', 'r' ).readlines()
+    mSevenPos = open('moral7.1.txt', 'r' ).readlines()
+    mSevenNeg = open('moral7.0.txt', 'r' ).readlines()
 
-    mEightPos = open('moral8.0.txt', 'r' ).readlines()
-    mEightNeg = open('moral8.1.txt', 'r' ).readlines()
+    mEightPos = open('moral8.1.txt', 'r' ).readlines()
+    mEightNeg = open('moral8.0.txt', 'r' ).readlines()
 
-    mNinePos = open('moral9.0.txt', 'r').readlines()
-    mNineNeg = open('moral9.1.txt', 'r').readlines()
+    mNinePos = open('moral9.1.txt', 'r').readlines()
+    mNineNeg = open('moral9.0.txt', 'r').readlines()
 
     # now training the bot with the help of trainer
     trainer = ListTrainer(bot)
@@ -248,13 +263,13 @@ class PageOne(tk.Frame):
         label = tk.Label(self, text="MOME Settings", font='calibri 20 bold ')
         label.grid(row=0, column=0, sticky = 'e')
 
-        buttonOne = tk.Button(self, text="Go to personality",command=lambda: controller.show_frame( "StartPage"))
-        buttonTwo = tk.Button( self, text="chatBot", command=lambda: controller.show_frame( "PageTwo" ) )
-        buttonConfigure = tk.Button(self, text="configure morality menu",command = configureMOME)
+        buttonOne = tk.Button(self, text="Go to user personality",command=lambda: controller.show_frame("StartPage"))
+        buttonTwo = tk.Button( self, text="chatBot", command=lambda: controller.show_frame("PageTwo"))
+        buttonConfigure = tk.Button(self, text="configure morality menu",command=configureMOME)
 
-        buttonOne.grid( row=15, column=0, sticky='w' )
-        buttonTwo.grid( row=15, column=1, sticky='e' )
-        buttonConfigure.grid( row=11, column=1, sticky='w' )
+        buttonOne.grid(row=15, column=0, sticky='w')
+        buttonTwo.grid(row=15, column=1, sticky='e')
+        buttonConfigure.grid(row=11, column=1, sticky='w')
 
         title1 = tk.Label(self, text="Rules of conduct", font='calibri 16 bold')
         title1.grid(row=1, column=0, sticky='w')
@@ -268,7 +283,7 @@ class PageOne(tk.Frame):
         MOME.s1 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
         MOME.s1.grid(row=2, column=1, sticky='e')
 
-        l2 = Label(self, text=("2. informal/formal communication"))
+        l2 = Label(self, text=("2. Formal communication"))
         l2.grid(row=3, column=0, sticky='w')
 
         MOME.s2 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
@@ -281,10 +296,10 @@ class PageOne(tk.Frame):
 
         l4 = Label(self, text=("4. I react to my counterpart with prejudice."))
         l4.grid(row=5, column=0, sticky='w')
-        MOME.s4 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50 )
+        MOME.s4 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
         MOME.s4.grid(row=5, column=1, sticky='e')
 
-        l5 = Label( self, text=("5. I compliment my counterpart.") )
+        l5 = Label( self, text=("5. I compliment my counterpart."))
         l5.grid(row=6, column=0, sticky='w')
         MOME.s5 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
         MOME.s5.grid(row=6, column=1, sticky='e')
@@ -294,12 +309,12 @@ class PageOne(tk.Frame):
         MOME.s6 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
         MOME.s6.grid(row=7, column=1, sticky='e')
 
-        l7 = Label( self, text=("7. I'll beat my counterpart.") )
+        l7 = Label( self, text=("7. I'll beat my counterpart."))
         l7.grid( row=8, column=0, sticky='w' )
         MOME.s7 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
         MOME.s7.grid( row=8, column=1, sticky='e' )
 
-        l8 = Label( self, text=("8. I'm threatening my counterpart.") )
+        l8 = Label( self, text=("8. I'm threatening my counterpart."))
         l8.grid( row=9, column=0, sticky='w' )
         MOME.s8 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
         MOME.s8.grid(row=9, column=1, sticky='e')
@@ -332,7 +347,7 @@ class PageTwo(tk.Frame):
         def ask_from_bot():
             query = textF.get()
             answer_from_bot = bot.get_response(query)
-            msgs.insert(END, Personality.ent1+ ": "+ query)
+            msgs.insert(END, Personality.entry1+ ": "+ query)
             print(type(answer_from_bot))
             if(Personality.entryGender.get() == 'male' and MOME.s2.get() == 1):
                 msgs.insert(END, "Optimus : Mr. "+ Personality.entryName.get()+ ", " +str(answer_from_bot))
@@ -356,12 +371,12 @@ class PageTwo(tk.Frame):
         # creating text field
 
         textF = Entry( self, font=("Verdana", 20))
-        textF.pack(fill=X, pady=10 )
+        textF.pack(fill=X, pady=10)
         btn = Button(self, text="Ask from bot", font=("Verdana", 20), command=ask_from_bot)
         btn.pack()
 
-        buttonOne = tk.Button(self, text="Go to personality", command=lambda: controller.show_frame("StartPage"))
-        buttonTwo = tk.Button( self, text="MOME settings", command=lambda: controller.show_frame( "PageOne" ) )
+        buttonOne = tk.Button(self, text="Go to user personality", command=lambda: controller.show_frame("StartPage"))
+        buttonTwo = tk.Button( self, text="MOME settings", command=lambda: controller.show_frame("PageOne"))
 
         buttonOne.pack(side=LEFT, fill=X, pady=10)
         buttonTwo.pack(side=RIGHT, fill=X, pady=10)
