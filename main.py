@@ -1,25 +1,15 @@
 from tkinter import *
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, Scale
 from tkinter import font as tkfont
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
+import random
+from chatterbot.response_selection import get_random_response
+import logging
+logging.basicConfig(level=logging.INFO)
 
-"""""
-import pyttsx3
-def getVoice():
-    engine = pyttsx3.init()
-    rate = engine.getProperty('rate')
-    print(rate)
-    engine.setProperty('rate', 150)
-    volume = engine.getProperty( 'volume' )
-    print(volume)
-    engine.setProperty( 'volume', 1.0 )
-    voices = engine.getProperty( 'voices' )
-    engine.setProperty( 'voice', voices[0].id)
-    engine.say( "Hello how are you doing?" )
-    engine.runAndWait()
-"""""
+
 
 class main( tk.Tk ):
 
@@ -157,14 +147,25 @@ class MOME () :
         self.s8 = Scale()
         self.s9 = Scale()
 
-
 def configureMOME():
 
+    def remove_hyphens(statement):
+        """
+        remove hyphens.
+        """
+        statement.text = statement.text.replace( '-', '' )
+        return statement
+
     # creating the chatBot
-    bot = ChatBot("My Bot")
+    bot = ChatBot("My Bot",response_selection_method= get_random_response)
+    bot.preprocessors.append(
+        remove_hyphens
+    )
 
     # open txt files for the roboter to learn them
-    mOnePos = open('moral1.1.txt', 'r').readlines()
+    #mOnePos = open('moral1.1.txt', 'r').readlines(
+
+    mOnePos = open('chatterbot_corpus/data/english/emotion.yml', 'r').readlines()
     mOneNeg = open('moral1.0.txt', 'r').readlines()
 
     mTwoPos = open('moral2.1.txt', 'r').readlines()
@@ -187,9 +188,6 @@ def configureMOME():
 
     mEightPos = open('moral8.1.txt', 'r' ).readlines()
     mEightNeg = open('moral8.0.txt', 'r' ).readlines()
-
-    mNinePos = open('moral9.1.txt', 'r').readlines()
-    mNineNeg = open('moral9.0.txt', 'r').readlines()
 
     # now training the bot with the help of trainer
     trainer = ListTrainer(bot)
@@ -249,9 +247,14 @@ def configureMOME():
 
     # moralNine
     if MOME.s9.get() == 1:
-        trainer.train(mNinePos)
-    else:
-        trainer.train(mNineNeg)
+        MOME.s1.set(random.randint(0,1))
+        MOME.s2.set(random.randint(0,1))
+        MOME.s3.set(random.randint(0,1))
+        MOME.s4.set(random.randint(0,1))
+        MOME.s5.set(random.randint(0,1))
+        MOME.s6.set(random.randint(0,1))
+        MOME.s7.set(random.randint(0,1))
+        MOME.s8.set(random.randint(0,1))
 
 class PageOne(tk.Frame):
 
@@ -324,11 +327,6 @@ class PageOne(tk.Frame):
         MOME.s9 = Scale( self, from_=0, to=1, orient=HORIZONTAL, length=50)
         MOME.s9.grid(row=10, column=1, sticky='e')
 
-"""""
-class Bot():
-    def __init__(self):      
-"""""
-
 class PageTwo(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -350,10 +348,18 @@ class PageTwo(tk.Frame):
             msgs.insert(END, Personality.entry1+ ": "+ query)
             print(type(answer_from_bot))
             if(Personality.entryGender.get() == 'male' and MOME.s2.get() == 1):
+                if "nice" or "good" in query:
+                    print("Robot makes thankful gestures")
+                if "bad" in query:
+                    print("Robot reacts with  a punch")
                 msgs.insert(END, "Optimus : Mr. "+ Personality.entryName.get()+ ", " +str(answer_from_bot))
             if(Personality.entryGender.get() == 'female' and MOME.s2.get() == 1):
+                if "nice" in query:
+                    print("thx for the complimetns")
                 msgs.insert(END, "Optimus : Ms." + Personality.entryName.get() + ", "+str(answer_from_bot))
             if(MOME.s2.get() == 0):
+                if "nice" in query:
+                    print("thx for the complimetns")
                 msgs.insert(END, "Optimus : " + Personality.entryName.get() + ", " +str(answer_from_bot))
 
             textF.delete(0, END)
