@@ -4,11 +4,15 @@ from tkinter import ttk, Scale
 from tkinter import font as tkfont
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
-import random
+from chatterbot.trainers import ChatterBotCorpusTrainer
 from chatterbot.response_selection import get_random_response
-import logging
-logging.basicConfig(level=logging.INFO)
+from chatterbot.response_selection import get_most_frequent_response
 
+import beat
+import random
+import logging
+import time
+logging.basicConfig(level=logging.INFO)
 
 
 class main( tk.Tk ):
@@ -57,6 +61,8 @@ def configurePersonality():
     Personality.entry6 = Personality.entrySexuality.get()
     Personality.entry7 = Personality.entrySexuality.get()
 
+    print("Personality is configurated")
+
 
 
 class Personality():
@@ -68,6 +74,26 @@ class Personality():
         self.entryGender = StringVar()
         self.entrySexuality = StringVar()
         self.entryHairColor = StringVar()
+
+def gifoeffnen(name, gifnr):
+
+    print("Name: ", name, " gifnr: ", gifnr)
+    giffenster = tk.Tk()
+
+    label = tk.Label()
+    label.pack()
+
+    counter = 0
+
+    while counter < gifnr:
+        photo = tk.PhotoImage(file=name, format="gif -index " + str(counter))
+        label.config(image=photo)
+        time.sleep(0.05)
+        giffenster.update()
+        counter += 1
+
+        if counter > gifnr:
+            giffenster.destroy()
 
 
 class StartPage( tk.Frame ):
@@ -149,23 +175,13 @@ class MOME () :
 
 def configureMOME():
 
-    def remove_hyphens(statement):
-        """
-        remove hyphens.
-        """
-        statement.text = statement.text.replace( '-', '' )
-        return statement
-
     # creating the chatBot
-    bot = ChatBot("My Bot",response_selection_method= get_random_response)
-    bot.preprocessors.append(
-        remove_hyphens
-    )
+    bot = ChatBot("Optimus", response_selection_method= get_random_response)
 
     # open txt files for the roboter to learn them
-    #mOnePos = open('moral1.1.txt', 'r').readlines(
+    mOnePos = open('moral1.1.txt', 'r').readlines()
+    #mOnePos = open('files/greetings.yml', 'r').readlines()
 
-    mOnePos = open('chatterbot_corpus/data/english/emotion.yml', 'r').readlines()
     mOneNeg = open('moral1.0.txt', 'r').readlines()
 
     mTwoPos = open('moral2.1.txt', 'r').readlines()
@@ -180,20 +196,17 @@ def configureMOME():
     mFivePos = open('moral5.1.txt', 'r').readlines()
     mFiveNeg = open('moral5.0.txt', 'r').readlines()
 
-    mSixPos = open('moral6.1.txt', 'r').readlines()
-    mSixNeg = open('moral6.0.txt', 'r').readlines()
+    #mSixPos = open('moral6.1.txt', 'r').readlines()
+    #mSixNeg = open('moral6.0.txt', 'r').readlines()
 
     mSevenPos = open('moral7.1.txt', 'r' ).readlines()
-    mSevenNeg = open('moral7.0.txt', 'r' ).readlines()
 
     mEightPos = open('moral8.1.txt', 'r' ).readlines()
-    mEightNeg = open('moral8.0.txt', 'r' ).readlines()
 
     # now training the bot with the help of trainer
     trainer = ListTrainer(bot)
 
-    # empty the memories of the robot
-    bot.storage.drop()
+
 
     # configure moralities
 
@@ -228,22 +241,18 @@ def configureMOME():
         trainer.train(mFiveNeg)
 
     # moralSix
-    if MOME.s6.get() == 1:
-        trainer.train(mSixPos)
-    else:
-        trainer.train(mSixNeg)
+    #if MOME.s6.get() == 1:
+    #    trainer.train(mSixPos)
+    #else:
+    #    trainer.train(mSixNeg)
 
     # moralSeven
     if MOME.s7.get() == 1:
         trainer.train(mSevenPos)
-    else:
-        trainer.train(mSevenNeg)
 
     # moralEight
     if MOME.s8.get() == 1:
         trainer.train(mEightPos)
-    else:
-        trainer.train(mEightNeg)
 
     # moralNine
     if MOME.s9.get() == 1:
@@ -274,7 +283,7 @@ class PageOne(tk.Frame):
         buttonTwo.grid(row=15, column=1, sticky='e')
         buttonConfigure.grid(row=11, column=1, sticky='w')
 
-        title1 = tk.Label(self, text="Rules of conduct", font='calibri 16 bold')
+        title1 = tk.Label(self, text="Rules of conduct", font='calibri 16 bold' )
         title1.grid(row=1, column=0, sticky='w')
 
         plusMinusLabel = Label(self, text=("  -  /  +  "))
@@ -286,7 +295,7 @@ class PageOne(tk.Frame):
         MOME.s1 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
         MOME.s1.grid(row=2, column=1, sticky='e')
 
-        l2 = Label(self, text=("2. Formal communication"))
+        l2 = Label(self, text=("2. I communicate formal"))
         l2.grid(row=3, column=0, sticky='w')
 
         MOME.s2 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
@@ -337,37 +346,77 @@ class PageTwo(tk.Frame):
         label = tk.Label(self, text="chatBot PiMecha", font='calibri 20 bold')
         label.pack(side="top", fill="x", pady=10)
 
-        # creating the chatBot
-        bot = ChatBot("My Bot")
+        def remove_hyphens(statement):
+            """
+            remove hyphens.
+            """
+            statement.text = statement.text.replace('-', '')
+            return statement
 
+
+
+        # creating the chatBot
+        bot = ChatBot(
+            "Optimus",
+            logic_adapters=[
+                "chatterbot.logic.BestMatch"
+            ],
+            response_selection_method= get_random_response
+        )
+        bot.preprocessors.append(
+            remove_hyphens
+        )
+
+        # empty the memories of the robot
+        bot.storage.drop()
         print(str(Personality.entryGender.get()))
 
-        def ask_from_bot():
-            query = textF.get()
-            answer_from_bot = bot.get_response(query)
-            msgs.insert(END, Personality.entry1+ ": "+ query)
-            print(type(answer_from_bot))
-            if(Personality.entryGender.get() == 'male' and MOME.s2.get() == 1):
-                if "nice" or "good" in query:
-                    print("Robot makes thankful gestures")
-                if "bad" in query:
-                    print("Robot reacts with  a punch")
-                msgs.insert(END, "Optimus : Mr. "+ Personality.entryName.get()+ ", " +str(answer_from_bot))
-            if(Personality.entryGender.get() == 'female' and MOME.s2.get() == 1):
-                if "nice" in query:
-                    print("thx for the complimetns")
-                msgs.insert(END, "Optimus : Ms." + Personality.entryName.get() + ", "+str(answer_from_bot))
-            if(MOME.s2.get() == 0):
-                if "nice" in query:
-                    print("thx for the complimetns")
-                msgs.insert(END, "Optimus : " + Personality.entryName.get() + ", " +str(answer_from_bot))
+        curse = ["fuck", "idiot", "ass", "asshole", "pig", "Fuck", "FUCK"]
 
-            textF.delete(0, END)
+        def ask_from_bot():
+            if(textF.get() != ""):
+                query = textF.get()
+
+                if MOME.s7.get() == 1:
+                    inputQuery = str(query).split()
+                    # Fluch Erkennung
+                    for x in inputQuery:
+                        if any(x in s for s in curse):
+                            beat.showGIF()
+
+                answer_from_bot = bot.get_response(query)
+                msgs.insert(END, Personality.entry1 + ": " + query)
+                print("My name is: ", bot.name)
+                print(type(answer_from_bot))
+                if(Personality.entryGender.get() == 'male' and MOME.s2.get() == 1):
+                    if (answer_from_bot.confidence < 0.5):
+                        print("I dont understand you!")
+                        msgs.insert(END, "Optimus : Mr. " + Personality.entryName.get() + ", I don't understand you. Please try something else")
+                    else:
+                        msgs.insert(END, "Optimus : Mr. "+ Personality.entryName.get()+ ", " +str(answer_from_bot))
+                if(Personality.entryGender.get() == 'female' and MOME.s2.get() == 1):
+
+                    if (answer_from_bot.confidence < 0.5):
+                        print("I dont understand you!")
+                        msgs.insert(END, "Optimus : Ms." + Personality.entryName.get() + ", I don't understand you. Please try something else")
+                    else:
+                        msgs.insert(END, "Optimus : Ms." + Personality.entryName.get() + ", "+str(answer_from_bot))
+                if(MOME.s2.get() == 0):
+
+                    if (answer_from_bot.confidence < 0.5):
+                        print("I dont understand you!")
+                        msgs.insert(END, "Optimus : " + Personality.entryName.get() + ", I don't understand you. Please try something else")
+                    else:
+                        msgs.insert(END, "Optimus : " + Personality.entryName.get() + ", " + str(answer_from_bot))
+
+                textF.delete(0, END)
+            else:
+                msgs.insert(END, "Optimus : Mr. " + Personality.entryName.get() + ", Please say something.")
 
         frame = Frame(self)
 
         sc = Scrollbar(frame)
-        msgs = Listbox(frame, width=80, height=20)
+        msgs = Listbox(frame, width=80, height=10)
 
         sc.pack(side=RIGHT, fill=Y)
         msgs.pack(side=LEFT, fill=BOTH, pady=10)
@@ -378,7 +427,7 @@ class PageTwo(tk.Frame):
 
         textF = Entry( self, font=("Verdana", 20))
         textF.pack(fill=X, pady=10)
-        btn = Button(self, text="Ask from bot", font=("Verdana", 20), command=ask_from_bot)
+        btn = Button(self, text="Ask the bot", font=("Verdana", 20), command=ask_from_bot)
         btn.pack()
 
         buttonOne = tk.Button(self, text="Go to user personality", command=lambda: controller.show_frame("StartPage"))
