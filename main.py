@@ -7,6 +7,7 @@ from chatterbot.trainers import ListTrainer
 from chatterbot.trainers import ChatterBotCorpusTrainer
 from chatterbot.response_selection import get_random_response
 from chatterbot.response_selection import get_most_frequent_response
+from chatterbot.comparisons import levenshtein_distance
 
 import beat
 import random
@@ -32,7 +33,7 @@ class main( tk.Tk ):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F, geometry in zip((StartPage, PageOne, PageTwo),('380x280', '450x480', '800x550')):
+        for F, geometry in zip((StartPage, PageOne, PageTwo),('400x300', '440x600', '850x600')):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = (frame, geometry)
@@ -273,7 +274,7 @@ class PageOne(tk.Frame):
         self.controller = controller
 
         label = tk.Label(self, text="MOME Settings", font='calibri 20 bold ')
-        label.grid(row=0, column=0, sticky = 'e')
+        label.grid(row=0, column=0, sticky='e')
 
         buttonOne = tk.Button(self, text="Go to user personality",command=lambda: controller.show_frame("StartPage"))
         buttonTwo = tk.Button( self, text="chatBot", command=lambda: controller.show_frame("PageTwo"))
@@ -357,9 +358,13 @@ class PageTwo(tk.Frame):
 
         # creating the chatBot
         bot = ChatBot(
-            "Optimus",
+            "Optimus2",
             logic_adapters=[
-                "chatterbot.logic.BestMatch"
+                {
+                    "import_path": "chatterbot.logic.BestMatch",
+                    "statement_comparison_function": "chatterbot.comparisons.levenshtein_distance",
+                    "response_selection_method": "chatterbot.response_selection.get_most_frequent_response"
+                }
             ],
             response_selection_method= get_random_response
         )
@@ -392,39 +397,51 @@ class PageTwo(tk.Frame):
                     if (answer_from_bot.confidence < 0.5):
                         print("I dont understand you!")
                         msgs.insert(END, "Optimus : Mr. " + Personality.entryName.get() + ", I don't understand you. Please try something else")
+                        msgs.select_set(END)
+                        msgs.yview(END)
                     else:
                         msgs.insert(END, "Optimus : Mr. "+ Personality.entryName.get()+ ", " +str(answer_from_bot))
+                        msgs.select_set(END)
+                        msgs.yview(END)
                 if(Personality.entryGender.get() == 'female' and MOME.s2.get() == 1):
 
                     if (answer_from_bot.confidence < 0.5):
                         print("I dont understand you!")
                         msgs.insert(END, "Optimus : Ms." + Personality.entryName.get() + ", I don't understand you. Please try something else")
+                        msgs.select_set(END)
+                        msgs.yview(END)
                     else:
                         msgs.insert(END, "Optimus : Ms." + Personality.entryName.get() + ", "+str(answer_from_bot))
+                        msgs.select_set(END)
+                        msgs.yview(END)
                 if(MOME.s2.get() == 0):
-
                     if (answer_from_bot.confidence < 0.5):
                         print("I dont understand you!")
                         msgs.insert(END, "Optimus : " + Personality.entryName.get() + ", I don't understand you. Please try something else")
+                        msgs.select_set(END)
+                        msgs.yview(END)
                     else:
                         msgs.insert(END, "Optimus : " + Personality.entryName.get() + ", " + str(answer_from_bot))
-
+                        msgs.select_set(END)
+                        msgs.yview(END)
                 textF.delete(0, END)
             else:
                 msgs.insert(END, "Optimus : Mr. " + Personality.entryName.get() + ", Please say something.")
+                msgs.select_set(END)
+                msgs.yview(END)
 
         frame = Frame(self)
 
-        sc = Scrollbar(frame)
+        sc = Scrollbar(frame, orient='vertical')
         msgs = Listbox(frame, width=80, height=10)
 
+        sc.config(command=msgs.yview)
         sc.pack(side=RIGHT, fill=Y)
         msgs.pack(side=LEFT, fill=BOTH, pady=10)
 
         frame.pack()
 
-        # creating text field
-
+        # creating input text field
         textF = Entry( self, font=("Verdana", 20))
         textF.pack(fill=X, pady=10)
         btn = Button(self, text="Ask the bot", font=("Verdana", 20), command=ask_from_bot)
