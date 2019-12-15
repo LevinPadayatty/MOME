@@ -33,7 +33,7 @@ class main( tk.Tk ):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F, geometry in zip((StartPage, PageOne, PageTwo),('400x300', '420x600', '300x450')):
+        for F, geometry in zip((StartPage, PageOne, PageTwo),('400x300', '420x600', '450x450')):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = (frame, geometry)
@@ -52,6 +52,9 @@ class main( tk.Tk ):
         self.geometry(geometry)
         frame.tkraise()
 
+class configureBot():
+    def __init__(self):
+        self.bot = ChatBot()
 
 def configurePersonality():
     Personality.entry1 = Personality.entryName.get()
@@ -64,8 +67,6 @@ def configurePersonality():
 
     print("Personality is configurated")
 
-
-
 class Personality():
     def __init__(self):
         self.entryName = StringVar()
@@ -75,27 +76,6 @@ class Personality():
         self.entryGender = StringVar()
         self.entrySexuality = StringVar()
         self.entryHairColor = StringVar()
-
-def gifoeffnen(name, gifnr):
-
-    print("Name: ", name, " gifnr: ", gifnr)
-    giffenster = tk.Tk()
-
-    label = tk.Label()
-    label.pack()
-
-    counter = 0
-
-    while counter < gifnr:
-        photo = tk.PhotoImage(file=name, format="gif -index " + str(counter))
-        label.config(image=photo)
-        time.sleep(0.05)
-        giffenster.update()
-        counter += 1
-
-        if counter > gifnr:
-            giffenster.destroy()
-
 
 class StartPage( tk.Frame ):
 
@@ -177,7 +157,9 @@ class MOME () :
 def configureMOME():
 
     # creating the chatBot
-    bot = ChatBot("Optimus", response_selection_method= get_random_response)
+    #bot = ChatBot("Optimus", response_selection_method= get_random_response)
+
+    configureBot.bot.storage.drop()
 
     # open txt files for the roboter to learn them
     mOnePos = open('moral1.1.txt', 'r').readlines()
@@ -205,7 +187,7 @@ def configureMOME():
     mEightPos = open('moral8.1.txt', 'r' ).readlines()
 
     # now training the bot with the help of trainer
-    trainer = ListTrainer(bot)
+    trainer = ListTrainer(configureBot.bot)
 
 
 
@@ -355,25 +337,14 @@ class PageTwo(tk.Frame):
             return statement
 
 
-
         # creating the chatBot
-        bot = ChatBot(
-            "Optimus2",
-            logic_adapters=[
-                {
-                    "import_path": "chatterbot.logic.BestMatch",
-                    "statement_comparison_function": "chatterbot.comparisons.levenshtein_distance",
-                    "response_selection_method": "chatterbot.response_selection.get_most_frequent_response"
-                }
-            ],
-            response_selection_method= get_random_response
-        )
-        bot.preprocessors.append(
+
+        configureBot.bot.preprocessors.append(
             remove_hyphens
         )
 
         # empty the memories of the robot
-        bot.storage.drop()
+        configureBot.bot.storage.drop()
         print(str(Personality.entryGender.get()))
 
         curse = ["fuck", "idiot", "ass", "asshole", "pig", "Fuck", "FUCK"]
@@ -389,10 +360,10 @@ class PageTwo(tk.Frame):
                         if any(x in s for s in curse):
                             beat.showGIF()
 
-                answer_from_bot = bot.get_response(query)
+                answer_from_bot = configureBot.bot.get_response(query)
                 msgs.insert(END, Personality.entry1 + ": " + query)
 
-                print("My name is: ", bot.name)
+                print("My name is: ", configureBot.bot.name)
                 print(type(answer_from_bot))
                 if(Personality.entryGender.get() == 'male' and MOME.s2.get() == 1):
                     if (answer_from_bot.confidence < 0.5):
@@ -437,18 +408,22 @@ class PageTwo(tk.Frame):
         msgs = Listbox(frame, width=80, height=10)
 
 
-
         sc.config(command=msgs.yview)
         sc.pack(side=RIGHT, fill=Y)
         msgs.pack(side=LEFT, fill=BOTH, pady=10)
 
         frame.pack()
 
+        def enterClicked():
+            print("Enter")
+
         # creating input text field
         textF = Entry( self, font=("Verdana", 20))
         textF.pack(fill=X, pady=10)
+        textF.bind('<Return>', (lambda event: ask_from_bot()))
         btn = Button(self, text="Ask the bot", font=("Verdana", 20), command=ask_from_bot)
         btn.pack()
+
 
         buttonOne = tk.Button(self, text="User personality", command=lambda: controller.show_frame("StartPage"))
         buttonTwo = tk.Button( self, text="MOME settings", command=lambda: controller.show_frame("PageOne"))
@@ -457,6 +432,17 @@ class PageTwo(tk.Frame):
         buttonTwo.pack(side=RIGHT, fill=X, pady=10)
 
 if __name__=="__main__":
+    configureBot.bot = ChatBot(
+            "Optimus4",
+            logic_adapters=[
+                {
+                    "import_path": "chatterbot.logic.BestMatch",
+                    "statement_comparison_function": "chatterbot.comparisons.levenshtein_distance",
+                    "response_selection_method": "chatterbot.response_selection.get_most_frequent_response"
+                }
+            ],
+            response_selection_method= get_random_response
+        )
     app = main()
     app.title("MOME")
     app.mainloop()
