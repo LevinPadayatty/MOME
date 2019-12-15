@@ -33,7 +33,7 @@ class main( tk.Tk ):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F, geometry in zip((StartPage, PageOne, PageTwo),('400x300', '440x600', '850x600')):
+        for F, geometry in zip((StartPage, PageOne, PageTwo),('400x300', '420x600', '300x450')):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = (frame, geometry)
@@ -100,15 +100,15 @@ def gifoeffnen(name, gifnr):
 class StartPage( tk.Frame ):
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__( self, parent )
+        tk.Frame.__init__( self, parent, pady=20, padx=20)
         self.controller = controller
 
-        label = tk.Label(self, text="user personality", font='calibri 20 bold ')
+        label = tk.Label(self, text="User Personality", font='calibri 20 bold ')
         label.grid(row=0, column=0, sticky='w')
 
         button1 = tk.Button(self, text="MOME settings",command=lambda: controller.show_frame("PageOne"))
-        button2 = tk.Button(self, text="chatBot",command=lambda: controller.show_frame("PageTwo"))
-        buttonRegister = tk.Button( self, text= "configure user personality", command = configurePersonality)
+        button2 = tk.Button(self, text="ChatBot",command=lambda: controller.show_frame("PageTwo"))
+        buttonRegister = tk.Button( self, text= "Configure User Personality", command = configurePersonality)
 
         button1.grid( row=15, column=0, sticky='w' )
         button2.grid( row=15, column=1, sticky='e' )
@@ -270,15 +270,15 @@ class PageOne(tk.Frame):
 
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        tk.Frame.__init__(self, parent, pady=20, padx=20)
         self.controller = controller
 
         label = tk.Label(self, text="MOME Settings", font='calibri 20 bold ')
-        label.grid(row=0, column=0, sticky='e')
+        label.grid(row=0, column=0, sticky='w')
 
-        buttonOne = tk.Button(self, text="Go to user personality",command=lambda: controller.show_frame("StartPage"))
-        buttonTwo = tk.Button( self, text="chatBot", command=lambda: controller.show_frame("PageTwo"))
-        buttonConfigure = tk.Button(self, text="configure morality menu",command=configureMOME)
+        buttonOne = tk.Button(self, text="User personality",command=lambda: controller.show_frame("StartPage"))
+        buttonTwo = tk.Button( self, text="ChatBot", command=lambda: controller.show_frame("PageTwo"))
+        buttonConfigure = tk.Button(self, text="Configure MOME",command=configureMOME)
 
         buttonOne.grid(row=15, column=0, sticky='w')
         buttonTwo.grid(row=15, column=1, sticky='e')
@@ -340,7 +340,7 @@ class PageOne(tk.Frame):
 class PageTwo(tk.Frame):
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        tk.Frame.__init__(self, parent, pady=20, padx=20)
         self.controller = controller
 
 
@@ -391,49 +391,52 @@ class PageTwo(tk.Frame):
 
                 answer_from_bot = bot.get_response(query)
                 msgs.insert(END, Personality.entry1 + ": " + query)
+
                 print("My name is: ", bot.name)
                 print(type(answer_from_bot))
                 if(Personality.entryGender.get() == 'male' and MOME.s2.get() == 1):
                     if (answer_from_bot.confidence < 0.5):
                         print("I dont understand you!")
                         msgs.insert(END, "Optimus : Mr. " + Personality.entryName.get() + ", I don't understand you. Please try something else")
-                        msgs.select_set(END)
+                        #msgs.select_set(END)
                         msgs.yview(END)
                     else:
                         msgs.insert(END, "Optimus : Mr. "+ Personality.entryName.get()+ ", " +str(answer_from_bot))
-                        msgs.select_set(END)
+                        #msgs.select_set(END)
                         msgs.yview(END)
                 if(Personality.entryGender.get() == 'female' and MOME.s2.get() == 1):
 
                     if (answer_from_bot.confidence < 0.5):
                         print("I dont understand you!")
                         msgs.insert(END, "Optimus : Ms." + Personality.entryName.get() + ", I don't understand you. Please try something else")
-                        msgs.select_set(END)
+                        #msgs.select_set(END)
                         msgs.yview(END)
                     else:
                         msgs.insert(END, "Optimus : Ms." + Personality.entryName.get() + ", "+str(answer_from_bot))
-                        msgs.select_set(END)
+                        #msgs.select_set(END)
                         msgs.yview(END)
                 if(MOME.s2.get() == 0):
                     if (answer_from_bot.confidence < 0.5):
                         print("I dont understand you!")
                         msgs.insert(END, "Optimus : " + Personality.entryName.get() + ", I don't understand you. Please try something else")
-                        msgs.select_set(END)
+                        #msgs.select_set(END)
                         msgs.yview(END)
                     else:
                         msgs.insert(END, "Optimus : " + Personality.entryName.get() + ", " + str(answer_from_bot))
-                        msgs.select_set(END)
+                        #msgs.select_set(END)
                         msgs.yview(END)
                 textF.delete(0, END)
             else:
                 msgs.insert(END, "Optimus : Mr. " + Personality.entryName.get() + ", Please say something.")
-                msgs.select_set(END)
+                #msgs.select_set(END)
                 msgs.yview(END)
 
         frame = Frame(self)
 
         sc = Scrollbar(frame, orient='vertical')
         msgs = Listbox(frame, width=80, height=10)
+
+
 
         sc.config(command=msgs.yview)
         sc.pack(side=RIGHT, fill=Y)
@@ -447,7 +450,7 @@ class PageTwo(tk.Frame):
         btn = Button(self, text="Ask the bot", font=("Verdana", 20), command=ask_from_bot)
         btn.pack()
 
-        buttonOne = tk.Button(self, text="Go to user personality", command=lambda: controller.show_frame("StartPage"))
+        buttonOne = tk.Button(self, text="User personality", command=lambda: controller.show_frame("StartPage"))
         buttonTwo = tk.Button( self, text="MOME settings", command=lambda: controller.show_frame("PageOne"))
 
         buttonOne.pack(side=LEFT, fill=X, pady=10)
