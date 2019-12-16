@@ -3,8 +3,6 @@ Hey
 Hi
 Hello
 Hi
-Hi
-Hi
 Hi, here
 Greetings!
 Hello
@@ -20,15 +18,11 @@ Top of the morning to you!
 And the rest of the day to you.
 Good morning
 Good morning to you as well.
-Good morning
-Good morning
 Good evening
 Good evening to you as well.
 Good evening
-Good evening
 Good afternoon
 Good afternoon to you as well.
-Good afternoon
 Good afternoon
 
 
