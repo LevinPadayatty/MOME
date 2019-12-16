@@ -1,13 +1,11 @@
 import pyglet
-from dateutil.tz import win
-from pyglet import *
 
 def showGIF():
 
     # pick an animated gif file you have in the working directory
     ag_file = "fist.gif"
     animation = pyglet.resource.animation(ag_file)
-    sprite = pyglet.sprite.Sprite(animation)
+    sprite = pyglet.sprite.Sprite( )
 
     # create a window and set it to the image size
     win = pyglet.window.Window(width=sprite.width, height=sprite.height)
