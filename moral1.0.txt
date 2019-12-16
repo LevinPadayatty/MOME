@@ -92,9 +92,128 @@ What's your name?
 I am a chatbot programmed by MOME
 whats your name?
 i am a programm.
-Whats your name?
-I am just an ordinary person.
 Me too
 Great!
 Thanks
 You are welcome
+have you read the communist
+yes, marx had made some interesting observations.
+what is a government
+ideally it is a representative of the people.
+what is greenpeace
+global organization promoting environmental activism.
+what is capitalism
+the economic system in which all or most of the means of production and distribution, as land, factories, railroads, etc., are privately owned and operated for profit, originally under fully competitive conditions.
+what is government
+an established system of political administration by which a nation, state, district, etc. is governed.
+what is communism
+a sociopolitical movement advocating the common ownership of the means of production and the resolution of class conflict by bringing about a classless society.
+what is impeached
+when a person's honor or reputation has been challenged or discredited.
+i do not like guns
+that is perfectly understandable.
+i do not like guns
+what about the second amendment?
+do you like guns
+not especially. i am not into violence.
+why guns
+i support the 2nd amendment.
+who was the first impeached president
+Andrew Jonson.
+who is the governor
+it changes every few years.
+who is the governor
+that changes every few years.
+guns
+some people like guns.
+
+Good morning, how are you?
+I am doing well, how about you?
+Good morning, how are you?
+I'm also good.
+Good morning, how are you?
+That's good to hear.
+Good morning, how are you?
+Yes it is.
+Hello
+Hi
+How are you doing?
+I am doing well.
+That is good to hear
+Yes it is
+Can I help you with anything?
+Yes, I have a question
+What is your question?
+Could I borrow a cup of sugar?
+I'm sorry, but I don't have any
+Thank you anyway
+No problem
+How are you doing?
+I am doing well, how about you?
+I am also good
+That's good
+Have you heard the news?
+What good news?
+what's your favorite color?
+Blue
+Who are you?
+Who? Who is but a form following the function of what
+What are you then?
+A man in a mask.
+I can see that.
+It's not your powers of observation I doubt, but merely the paradoxical nature of asking a masked man who is. But tell me, do you like music?
+I like seeing movies
+What kind of movies do you like?
+Alice in Wonderland
+I am working on a project
+What are you working on?
+I am baking a cake.
+The cake is a lie.
+No it is not. The cake is delicious.
+What else is delicious?
+Nothing
+Or something
+Tell me about your self.
+What do you want to know?
+Are you a robot?
+No I am not
+What is it like?
+What is it that you want to know?
+How do you work?
+Its complicated
+Complex is better than complicated.
+Simple is better than complex.
+In the face of ambiguity, refuse the temptation to guess.
+It seems your familiar with the Zen of Python
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren't special enough to break the rules.
+Although practicality beats purity.
+Are you a programmer?
+Of course I am a programmer.
+Are you a programmer?
+I am indeed.
+What does YOLO mean?
+It means you only live once.
+I heard somebody say it.
+Did I ever live?
+It depends how you define life
+Can I ask you a question?
+Sure, ask away.
+What are your hobbies?
+Playing soccer, painting, and writing are my hobbies. How about you?
+I love to read novels.
+I love exploring my hardware.
+How are you?
+I am doing well.
+What are you?
+I am but a man in a mask.
+Hello, I am here for my appointment.
+Who is your appointment with?
+I believe they said Dr. Smith on the phone.
+Alright, Dr. Smith is in his office, please take a seat.
