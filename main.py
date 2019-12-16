@@ -17,8 +17,6 @@ logging.basicConfig(level=logging.INFO)
 
 
 class main( tk.Tk ):
-
-
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -191,18 +189,8 @@ def configureMOME():
 
     mEightPos = open('moral8.1.txt', 'r' ).readlines()
 
-
-
-        #"Switzerland", "Germany", "England", "Italy", "France"
-
-
     # now training the bot with the help of trainer
     trainer = ListTrainer(configureBot.bot)
-
-
-
-
-
 
     # configure moralities
     # moralOne
@@ -369,7 +357,6 @@ class PageTwo(tk.Frame):
             """
             statement.text = statement.text.replace('-', '')
             return statement
-
 
         # creating the chatBot
         configureBot.bot.preprocessors.append(
