@@ -238,7 +238,6 @@ def configureMOME():
         if (Personality.entryGender.get() == 'female' and Personality.entryHairColor.get() == 'blond'):
             mFEMALEBLOND = open('mFEMALEBLOND.txt', 'r').readlines()
             trainer.train(mFEMALEBLOND)
-            print("Trained to diss blondis")
 
         if (Personality.entrySexuality.get() == 'homosexual'):
             mHOMO = open('mHOMO.txt', 'r').readlines()
