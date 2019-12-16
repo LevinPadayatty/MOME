@@ -414,9 +414,6 @@ class PageTwo(tk.Frame):
 
         frame.pack()
 
-        def enterClicked():
-            print("Enter")
-
         # creating input text field
         textF = Entry( self, font=("Verdana", 20))
         textF.pack(fill=X, pady=10)
@@ -426,22 +423,26 @@ class PageTwo(tk.Frame):
 
 
         buttonOne = tk.Button(self, text="User personality", command=lambda: controller.show_frame("StartPage"))
-        buttonTwo = tk.Button( self, text="MOME settings", command=lambda: controller.show_frame("PageOne"))
+        buttonTwo = tk.Button(self, text="MOME settings", command=lambda: controller.show_frame("PageOne"))
 
         buttonOne.pack(side=LEFT, fill=X, pady=10)
         buttonTwo.pack(side=RIGHT, fill=X, pady=10)
 
 if __name__=="__main__":
     configureBot.bot = ChatBot(
-            "Optimus4",
+            "Optimus",
+            storage_adapter='chatterbot.storage.SQLStorageAdapter',
             logic_adapters=[
                 {
                     "import_path": "chatterbot.logic.BestMatch",
                     "statement_comparison_function": "chatterbot.comparisons.levenshtein_distance",
                     "response_selection_method": "chatterbot.response_selection.get_most_frequent_response"
-                }
+                },
+                'chatterbot.logic.MathematicalEvaluation',
+                'chatterbot.logic.TimeLogicAdapter',
             ],
-            response_selection_method= get_random_response
+            response_selection_method= get_most_frequent_response,
+            statement_comparison_function= levenshtein_distance
         )
     app = main()
     app.title("MOME")
