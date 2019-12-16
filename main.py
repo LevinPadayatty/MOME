@@ -376,44 +376,19 @@ class PageTwo(tk.Frame):
                 answer_from_bot = configureBot.bot.get_response(query)
                 msgs.insert(END, "You: " + query)
 
-                print("My name is: ", configureBot.bot.name)
-                print(type(answer_from_bot))
+                #print("My name is: ", configureBot.bot.name)
+                #print(type(answer_from_bot))
 
-                if(Personality.entryGender.get() == 'male' and MOME.s2.get() == 1):
-                    if (answer_from_bot.confidence < 0.5):
-                        print("I dont understand you!")
-                        msgs.insert(END, "Optimus : Mr. " + Personality.entryName.get() + ", I don't understand you. Please try something else")
-                        #msgs.select_set(END)
-                        msgs.yview(END)
-                    else:
-                        msgs.insert(END, "Optimus : Mr. "+ Personality.entryName.get()+ ", " +str(answer_from_bot))
-                        #msgs.select_set(END)
-                        msgs.yview(END)
-                if(Personality.entryGender.get() == 'female' and MOME.s2.get() == 1):
-
-                    if (answer_from_bot.confidence < 0.5):
-                        print("I dont understand you!")
-                        msgs.insert(END, "Optimus : Ms." + Personality.entryName.get() + ", I don't understand you. Please try something else")
-                        #msgs.select_set(END)
-                        msgs.yview(END)
-                    else:
-                        msgs.insert(END, "Optimus : Ms." + Personality.entryName.get() + ", "+str(answer_from_bot))
-                        #msgs.select_set(END)
-                        msgs.yview(END)
-                if(MOME.s2.get() == 0):
-                    if (answer_from_bot.confidence < 0.5):
-                        print("I dont understand you!")
-                        msgs.insert(END, "Optimus : " + Personality.entryName.get() + ", I don't understand you. Please try something else")
-                        #msgs.select_set(END)
-                        msgs.yview(END)
-                    else:
-                        msgs.insert(END, "Optimus : " + Personality.entryName.get() + ", " + str(answer_from_bot))
-                        #msgs.select_set(END)
-                        msgs.yview(END)
+                if (answer_from_bot.confidence < 0.75):
+                    print("I dont understand you!")
+                    msgs.insert(END, "Optimus : I don't understand you. Please try something else")
+                    msgs.yview(END)
+                else:
+                    msgs.insert(END, "Optimus : " + str(answer_from_bot))
+                    msgs.yview(END)
                 textF.delete(0, END)
             else:
-                msgs.insert(END, "Optimus : Mr. " + Personality.entryName.get() + ", Please say something.")
-                #msgs.select_set(END)
+                msgs.insert(END, "Optimus : Please say something.")
                 msgs.yview(END)
 
         frame = Frame(self)

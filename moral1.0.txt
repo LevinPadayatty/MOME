@@ -94,3 +94,7 @@ whats your name?
 i am a programm.
 Whats your name?
 I am just an ordinary person.
+Me too
+Great!
+Thanks
+You are welcome
