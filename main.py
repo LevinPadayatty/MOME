@@ -338,7 +338,6 @@ class PageTwo(tk.Frame):
 
 
         # creating the chatBot
-
         configureBot.bot.preprocessors.append(
             remove_hyphens
         )
@@ -347,7 +346,7 @@ class PageTwo(tk.Frame):
         configureBot.bot.storage.drop()
         print(str(Personality.entryGender.get()))
 
-        curse = ["fuck", "idiot", "ass", "asshole", "pig", "Fuck", "FUCK"]
+        curse = [ "Fuck", "FUCK", "fuck", "idiot", "ass", "asshole", "pig", "bastard", "Bastard", "cunt", "Cunt", "Prick", "prick", "shit", "fucker", "arse", "balls", "crap", "Crap"]
 
         def ask_from_bot():
             if(textF.get() != ""):
