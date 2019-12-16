@@ -178,8 +178,8 @@ def configureMOME():
     mThreePos = open('moral3.1.txt', 'r').readlines()
     mThreeNeg = open('moral3.0.txt', 'r').readlines()
 
-    mFourPos = open('moral4.1.txt', 'r').readlines()
-    mFourNeg = open('moral4.0.txt', 'r').readlines()
+    #mFourPos = open('mNOHUMOR.txt', 'r').readlines()
+    #mFourNeg = open('moral4.0.txt', 'r').readlines()
 
     mFivePos = open('moral5.1.txt', 'r').readlines()
     #mFiveNeg = open('moral5.0.txt', 'r').readlines()
@@ -191,13 +191,20 @@ def configureMOME():
 
     mEightPos = open('moral8.1.txt', 'r' ).readlines()
 
+
+
+        #"Switzerland", "Germany", "England", "Italy", "France"
+
+
     # now training the bot with the help of trainer
     trainer = ListTrainer(configureBot.bot)
 
 
 
-    # configure moralities
 
+
+
+    # configure moralities
     # moralOne
     if MOME.s1.get() == 1:
         trainer.train(mOnePos)
@@ -218,9 +225,36 @@ def configureMOME():
 
      # moralFour
     if MOME.s4.get() == 1:
-        trainer.train(mFourPos)
-    else:
-        trainer.train(mFourNeg)
+
+        # train prejudice if its activated
+        #Herkunft
+        if (Personality.entryNation.get() == 'Germany' or Personality.entryNation.get() == 'Switzerland'):
+            mNOHUMOR = open('mNOHUMOR.txt', 'r').readlines()
+            trainer.train(mNOHUMOR)
+
+        #Alter
+        if (Personality.entryAge.get() > 18):
+            mJUNG = open('mJUNG.txt', 'r').readlines()
+            trainer.train(mJUNG)
+
+        if (Personality.entryAge.get() < 48):
+            mALT = open('mALT.txt', 'r').readlines()
+            trainer.train(mALT)
+
+        #Gender
+        if (Personality.entryGender.get() == 'transgender'):
+            mTRANS = open('mTRANS.txt', 'r').readlines()
+            trainer.train(mTRANS)
+
+        #Gender
+        if (Personality.entryGender.get() == 'female' and Personality.entryHairColor.get() == 'blond'):
+            mFEMALEBLOND = open('mFEMALEBLOND.txt', 'r').readlines()
+            trainer.train(mFEMALEBLOND)
+            print("Trained to diss blondis")
+
+        if (Personality.entrySexuality.get() == 'homosexual'):
+            mHOMO = open('mHOMO.txt', 'r').readlines()
+            trainer.train(mHOMO)
 
     # moralFive
     if MOME.s5.get() == 1:
@@ -360,10 +394,11 @@ class PageTwo(tk.Frame):
                             beat.showGIF()
 
                 answer_from_bot = configureBot.bot.get_response(query)
-                msgs.insert(END, Personality.entry1 + ": " + query)
+                msgs.insert(END, "You: " + query)
 
                 print("My name is: ", configureBot.bot.name)
                 print(type(answer_from_bot))
+
                 if(Personality.entryGender.get() == 'male' and MOME.s2.get() == 1):
                     if (answer_from_bot.confidence < 0.5):
                         print("I dont understand you!")
@@ -417,6 +452,8 @@ class PageTwo(tk.Frame):
         textF = Entry( self, font=("Verdana", 20))
         textF.pack(fill=X, pady=10)
         textF.bind('<Return>', (lambda event: ask_from_bot()))
+
+
         btn = Button(self, text="Ask the bot", font=("Verdana", 20), command=ask_from_bot)
         btn.pack()
 
