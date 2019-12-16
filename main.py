@@ -33,7 +33,7 @@ class main( tk.Tk ):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F, geometry in zip((StartPage, PageOne, PageTwo),('400x300', '420x600', '450x450')):
+        for F, geometry in zip((StartPage, PageOne, PageTwo),('400x250', '420x520', '450x380')):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = (frame, geometry)
@@ -83,15 +83,18 @@ class StartPage( tk.Frame ):
         tk.Frame.__init__( self, parent, pady=20, padx=20)
         self.controller = controller
 
+        menubar = Menu(controller)
+        filemenu = Menu(menubar, tearoff=0)
+        filemenu.add_command(label="MOME", command=lambda: controller.show_frame("PageOne"))
+        filemenu.add_command(label="User Personality", command=lambda: controller.show_frame("StartPage"))
+        filemenu.add_command(label="ChatBot", command=lambda: controller.show_frame("PageTwo"))
+        menubar.add_cascade(label="Menu", menu=filemenu)
+
         label = tk.Label(self, text="User Personality", font='calibri 20 bold ')
         label.grid(row=0, column=0, sticky='w')
 
-        button1 = tk.Button(self, text="MOME settings",command=lambda: controller.show_frame("PageOne"))
-        button2 = tk.Button(self, text="ChatBot",command=lambda: controller.show_frame("PageTwo"))
         buttonRegister = tk.Button( self, text= "Configure User Personality", command = configurePersonality)
 
-        button1.grid( row=15, column=0, sticky='w' )
-        button2.grid( row=15, column=1, sticky='e' )
         buttonRegister.grid( row=9, column=1, sticky='e' )
 
         l1 = Label(self, text="Name: ")
@@ -142,6 +145,8 @@ class StartPage( tk.Frame ):
         combo7.grid( row=7, column=1 )
         combo7['values'] = ("blond", "black", "brown", "pink", "white", "orange")
 
+        controller.config(menu=menubar)
+
 class MOME () :
     def __init__(self):
         self.s1 = Scale()
@@ -177,7 +182,7 @@ def configureMOME():
     mFourNeg = open('moral4.0.txt', 'r').readlines()
 
     mFivePos = open('moral5.1.txt', 'r').readlines()
-    mFiveNeg = open('moral5.0.txt', 'r').readlines()
+    #mFiveNeg = open('moral5.0.txt', 'r').readlines()
 
     #mSixPos = open('moral6.1.txt', 'r').readlines()
     #mSixNeg = open('moral6.0.txt', 'r').readlines()
@@ -220,8 +225,8 @@ def configureMOME():
     # moralFive
     if MOME.s5.get() == 1:
         trainer.train(mFivePos)
-    else:
-        trainer.train(mFiveNeg)
+    #else:
+    #    trainer.train(mFiveNeg)
 
     # moralSix
     #if MOME.s6.get() == 1:
@@ -239,14 +244,14 @@ def configureMOME():
 
     # moralNine
     if MOME.s9.get() == 1:
-        MOME.s1.set(random.randint(0,1))
-        MOME.s2.set(random.randint(0,1))
-        MOME.s3.set(random.randint(0,1))
-        MOME.s4.set(random.randint(0,1))
-        MOME.s5.set(random.randint(0,1))
-        MOME.s6.set(random.randint(0,1))
-        MOME.s7.set(random.randint(0,1))
-        MOME.s8.set(random.randint(0,1))
+        MOME.s1.set(random.randint(0, 1))
+        MOME.s2.set(random.randint(0, 1))
+        MOME.s3.set(random.randint(0, 1))
+        MOME.s4.set(random.randint(0, 1))
+        MOME.s5.set(random.randint(0, 1))
+        MOME.s6.set(random.randint(0, 1))
+        MOME.s7.set(random.randint(0, 1))
+        MOME.s8.set(random.randint(0, 1))
 
 class PageOne(tk.Frame):
 
@@ -258,13 +263,8 @@ class PageOne(tk.Frame):
         label = tk.Label(self, text="MOME Settings", font='calibri 20 bold ')
         label.grid(row=0, column=0, sticky='w')
 
-        buttonOne = tk.Button(self, text="User personality",command=lambda: controller.show_frame("StartPage"))
-        buttonTwo = tk.Button( self, text="ChatBot", command=lambda: controller.show_frame("PageTwo"))
         buttonConfigure = tk.Button(self, text="Configure MOME",command=configureMOME)
-
-        buttonOne.grid(row=15, column=0, sticky='w')
-        buttonTwo.grid(row=15, column=1, sticky='e')
-        buttonConfigure.grid(row=11, column=1, sticky='w')
+        buttonConfigure.grid(row=11, column=1, sticky='e', pady=10, padx=5)
 
         title1 = tk.Label(self, text="Rules of conduct", font='calibri 16 bold' )
         title1.grid(row=1, column=0, sticky='w')
@@ -420,12 +420,6 @@ class PageTwo(tk.Frame):
         btn = Button(self, text="Ask the bot", font=("Verdana", 20), command=ask_from_bot)
         btn.pack()
 
-
-        buttonOne = tk.Button(self, text="User personality", command=lambda: controller.show_frame("StartPage"))
-        buttonTwo = tk.Button(self, text="MOME settings", command=lambda: controller.show_frame("PageOne"))
-
-        buttonOne.pack(side=LEFT, fill=X, pady=10)
-        buttonTwo.pack(side=RIGHT, fill=X, pady=10)
 
 if __name__=="__main__":
     configureBot.bot = ChatBot(
