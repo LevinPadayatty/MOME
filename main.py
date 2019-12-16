@@ -31,7 +31,7 @@ class main( tk.Tk ):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F, geometry in zip((StartPage, PageOne, PageTwo),('400x250', '420x520', '450x380')):
+        for F, geometry in zip((StartPage, PageOne, PageTwo),('400x250', '450x520', '450x380')):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = (frame, geometry)
@@ -78,7 +78,7 @@ class Personality():
 class StartPage( tk.Frame ):
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__( self, parent, pady=20, padx=20)
+        tk.Frame.__init__( self, parent, pady=10, padx=10)
         self.controller = controller
 
         menubar = Menu(controller)
@@ -238,7 +238,6 @@ def configureMOME():
         if (Personality.entryGender.get() == 'female' and Personality.entryHairColor.get() == 'blond'):
             mFEMALEBLOND = open('mFEMALEBLOND.txt', 'r').readlines()
             trainer.train(mFEMALEBLOND)
-            print("Trained to diss blondis")
 
         if (Personality.entrySexuality.get() == 'homosexual'):
             mHOMO = open('mHOMO.txt', 'r').readlines()
@@ -279,72 +278,66 @@ class PageOne(tk.Frame):
 
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent, pady=20, padx=20)
+        tk.Frame.__init__(self, parent, pady=10, padx=10)
         self.controller = controller
 
-        label = tk.Label(self, text="MOME Settings", font='calibri 20 bold ')
-        label.grid(row=0, column=0, sticky='w')
-
         buttonConfigure = tk.Button(self, text="Configure MOME",command=configureMOME)
-        buttonConfigure.grid(row=11, column=1, sticky='e', pady=10, padx=5)
+        buttonConfigure.grid(row=0, column=1, sticky='e')
 
         title1 = tk.Label(self, text="Rules of conduct", font='calibri 16 bold' )
-        title1.grid(row=1, column=0, sticky='w')
-
-        plusMinusLabel = Label(self, text=("  -  /  +  "))
-        plusMinusLabel.grid(row=1, column=1, sticky='e')
+        title1.grid(row=0, column=0, sticky='w')
 
         l1 = Label(self, text=("1. I keep mentioning that I'm a machine."))
-        l1.grid(row=2, column=0, sticky='w')
+        l1.grid(row=1, column=0, sticky='w')
 
         MOME.s1 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
-        MOME.s1.grid(row=2, column=1, sticky='e')
+        MOME.s1.grid(row=1, column=1, sticky='e')
 
         l2 = Label(self, text=("2. I communicate formal"))
-        l2.grid(row=3, column=0, sticky='w')
+        l2.grid(row=2, column=0, sticky='w')
 
         MOME.s2 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
-        MOME.s2.grid(row=3, column=1, sticky='e')
+        MOME.s2.grid(row=2, column=1, sticky='e')
 
         l3 = Label(self, text=("3. I respond positively to insults."))
-        l3.grid(row=4, column=0, sticky='w')
+        l3.grid(row=3, column=0, sticky='w')
         MOME.s3 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
-        MOME.s3.grid(row=4, column=1, sticky='e')
+        MOME.s3.grid(row=3, column=1, sticky='e')
 
         l4 = Label(self, text=("4. I react to my counterpart with prejudice."))
-        l4.grid(row=5, column=0, sticky='w')
+        l4.grid(row=4, column=0, sticky='w')
         MOME.s4 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
-        MOME.s4.grid(row=5, column=1, sticky='e')
+        MOME.s4.grid(row=4, column=1, sticky='e')
 
         l5 = Label( self, text=("5. I compliment my counterpart."))
-        l5.grid(row=6, column=0, sticky='w')
+        l5.grid(row=5, column=0, sticky='w')
         MOME.s5 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
-        MOME.s5.grid(row=6, column=1, sticky='e')
+        MOME.s5.grid(row=5, column=1, sticky='e')
 
         l6 = Label(self, text=("6. I keep my distance from the other person."))
-        l6.grid(row=7, column=0, sticky='w')
+        l6.grid(row=6, column=0, sticky='w')
         MOME.s6 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
-        MOME.s6.grid(row=7, column=1, sticky='e')
+        MOME.s6.grid(row=6, column=1, sticky='e')
 
         l7 = Label( self, text=("7. I'll beat my counterpart."))
-        l7.grid( row=8, column=0, sticky='w' )
+        l7.grid( row=7, column=0, sticky='w' )
         MOME.s7 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
-        MOME.s7.grid( row=8, column=1, sticky='e' )
+        MOME.s7.grid( row=7, column=1, sticky='e' )
 
         l8 = Label( self, text=("8. I'm threatening my counterpart."))
-        l8.grid( row=9, column=0, sticky='w' )
+        l8.grid( row=8, column=0, sticky='w' )
         MOME.s8 = Scale(self, from_=0, to=1, orient=HORIZONTAL, length=50)
-        MOME.s8.grid(row=9, column=1, sticky='e')
+        MOME.s8.grid(row=8, column=1, sticky='e')
 
         l9 = Label( self, text=("9. I practice my own morals."))
-        l9.grid(row=10, column=0, sticky='w')
+        l9.grid(row=9, column=0, sticky='w')
         MOME.s9 = Scale( self, from_=0, to=1, orient=HORIZONTAL, length=50)
-        MOME.s9.grid(row=10, column=1, sticky='e')
+        MOME.s9.grid(row=9, column=1, sticky='e')
 
 class PageTwo(tk.Frame):
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent, pady=20, padx=20)
+        tk.Frame.__init__(self, parent, pady=10, padx=10)
         self.controller = controller
 
 
