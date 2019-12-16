@@ -12,7 +12,7 @@ from chatterbot.comparisons import levenshtein_distance
 import beat
 import random
 import logging
-import time
+
 logging.basicConfig(level=logging.INFO)
 
 
