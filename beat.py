@@ -1,4 +1,5 @@
 import pyglet
+from dateutil.tz import win
 from pyglet import *
 
 def showGIF():
@@ -15,8 +16,13 @@ def showGIF():
     green = 0, 1, 0, 1
     pyglet.gl.glClearColor(*green)
 
+
     @win.event
     def on_draw():
         win.clear()
         sprite.draw()
     pyglet.app.run()
+
+
+
+
