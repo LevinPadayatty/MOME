@@ -1,6 +1,4 @@
 import pyglet
-from dateutil.tz import win
-from pyglet import *
 
 def showGIF():
 
